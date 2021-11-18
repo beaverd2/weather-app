@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Line, defaults } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import styled from 'styled-components';
@@ -13,6 +13,12 @@ Chart.helpers.merge(Chart.defaults.global.plugins.datalabels, {
   align: 'top',
   font: { size: 14 },
 });
+
+const rain = new Image(30, 30);
+rain.src = '/img/rain.svg';
+
+const snow = new Image(30, 30);
+snow.src = '/img/snow.svg';
 
 const StyledChart = styled.div`
   position: relative;
@@ -50,26 +56,24 @@ const HourlyForecastChart = ({ weatherHourly, timezoneprop }) => {
     }
   });
 
-  const sun = new Image();
-  sun.src = 'https://i.imgur.com/yDYW1I7.png';
-
-  const cloud = new Image();
-  cloud.src = 'https://i.imgur.com/DIbr9q1.png';
-
-  let imageIndexes = weatherData.map((weather, index) => {
-    if (weather.pop > 0.5) {
+  let rainIndexes = weatherData.map((weather, index) => {
+    if (weather.pop > 0.5 && weather.temp > 0) {
       return index;
     }
     return null;
   });
 
-  const icon = new Image(30, 30);
-  icon.src = '/img/rain.svg';
+  let snowIndexes = weatherData.map((weather, index) => {
+    if (weather.pop > 0.5 && weather.temp < 0) {
+      return index;
+    }
+    return null;
+  });
 
   const datasetKeyProvider = () => {
     return btoa(Math.random()).substring(0, 12);
   };
-
+  console.log(weatherHourly);
   return (
     <ChartWrapper>
       <StyledChart>
@@ -116,36 +120,63 @@ const HourlyForecastChart = ({ weatherHourly, timezoneprop }) => {
                 data: weatherData.map((data) => {
                   return data.temp;
                 }),
-                backgroundColor: ['rgba(0, 0, 0, 0)'],
+                backgroundColor: 'rgba(0, 0, 0, 0)',
                 borderColor: ['rgb(255, 255, 255, 0.5)'],
                 borderWidth: 1,
                 borderDash: [5, 5],
-                pointBackgroundColor: ['rgb(255, 255, 255, 1)'],
-                pointBorderColor: ['rgb(255, 255, 255, 0)'],
+                pointBackgroundColor: (context) => {
+                  if (
+                    context.dataIndex === 0 &&
+                    !rainIndexes.includes(context.dataIndex)
+                  ) {
+                    return 'rgb(255, 255, 255, 1)';
+                  }
+                  if (
+                    context.dataIndex !== 0 &&
+                    !rainIndexes.includes(context.dataIndex)
+                  ) {
+                    return 'rgb(255, 255, 255, 0.3)';
+                  }
+                },
+                pointBorderColor: 'rgb(255, 255, 255, 0)',
                 pointBorderWidth: 0,
                 pointRadius: 3,
                 pointHoverBorderWidth: 0,
                 pointHoverRadius: 3,
-                pointHoverBackgroundColor: ['rgb(255, 255, 255, 1)'],
-                pointHoverBorderColor: ['rgb(255, 255, 255, 0.1)'],
-                HoverBackgroundColor: ['rgb(255, 255, 255, 1)'],
-                HoverBorderColor: ['rgb(255, 255, 255, 1)'],
               },
               {
                 data: weatherData
                   .map((data) => {
                     return data.temp;
                   })
-                  .map((v, i) => (imageIndexes.includes(i) ? v : null)),
-                datalabels: {
-                  labels: {
-                    title: null,
-                  },
-                },
+                  .map((v, i) => (rainIndexes.includes(i) ? v : null)),
+                // datalabels: {
+                //   labels: {
+                //     title: null,
+                //   },
+                // },
+                borderColor: 'none',
                 fill: false,
-                pointStyle: icon,
-                pointRadius: 22,
-                pointHoverRadius: 22,
+                pointStyle: rain,
+                // pointRadius: 22,
+                // pointHoverRadius: 22,
+              },
+              {
+                data: weatherData
+                  .map((data) => {
+                    return data.temp;
+                  })
+                  .map((v, i) => (snowIndexes.includes(i) ? v : null)),
+                // datalabels: {
+                //   labels: {
+                //     title: null,
+                //   },
+                // },
+                borderColor: 'none',
+                fill: false,
+                pointStyle: snow,
+                // pointRadius: 22,
+                // pointHoverRadius: 22,
               },
             ],
           }}
@@ -155,4 +186,4 @@ const HourlyForecastChart = ({ weatherHourly, timezoneprop }) => {
   );
 };
 
-export default HourlyForecastChart;
+export default memo(HourlyForecastChart);

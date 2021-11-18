@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Line } from 'react-chartjs-2';
 import styled from 'styled-components';
 
@@ -118,20 +118,19 @@ const RainChart = ({ weatherHourly, timezone }) => {
                   data: weatherData.map((data) => {
                     return data.pop;
                   }),
-                  backgroundColor: ['rgba(0, 0, 0, 0)'],
+                  backgroundColor: 'rgba(0, 0, 0, 0)',
                   borderColor: ['rgb(255, 255, 255, 0.5)'],
                   borderWidth: 1,
                   borderDash: [5, 5],
-                  pointBackgroundColor: ['rgb(255, 255, 255, 1)'],
-                  pointBorderColor: ['rgb(255, 255, 255, 0)'],
+                  pointBackgroundColor: (context) =>
+                    context.dataIndex === 0
+                      ? 'rgb(255, 255, 255, 1)'
+                      : 'rgb(255, 255, 255, 0.3)',
+                  pointBorderColor: 'rgb(255, 255, 255, 0)',
                   pointBorderWidth: 0,
                   pointRadius: 3,
                   pointHoverBorderWidth: 0,
                   pointHoverRadius: 3,
-                  pointHoverBackgroundColor: ['rgb(255, 255, 255, 1)'],
-                  pointHoverBorderColor: ['rgb(255, 255, 255, 0.1)'],
-                  HoverBackgroundColor: ['rgb(255, 255, 255, 1)'],
-                  HoverBorderColor: ['rgb(255, 255, 255, 1)'],
                 },
               ],
             }}
@@ -142,4 +141,4 @@ const RainChart = ({ weatherHourly, timezone }) => {
   );
 };
 
-export default RainChart;
+export default memo(RainChart);
