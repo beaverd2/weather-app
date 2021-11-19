@@ -57,14 +57,7 @@ const HourlyForecastChart = ({ weatherHourly, timezoneprop }) => {
   });
 
   let rainIndexes = weatherData.map((weather, index) => {
-    if (weather.pop > 0.5 && weather.temp > 0) {
-      return index;
-    }
-    return null;
-  });
-
-  let snowIndexes = weatherData.map((weather, index) => {
-    if (weather.pop > 0.5 && weather.temp < 0) {
+    if (weather.pop > 0.5) {
       return index;
     }
     return null;
@@ -73,7 +66,8 @@ const HourlyForecastChart = ({ weatherHourly, timezoneprop }) => {
   const datasetKeyProvider = () => {
     return btoa(Math.random()).substring(0, 12);
   };
-  console.log(weatherHourly);
+
+  console.log(weatherData);
   return (
     <ChartWrapper>
       <StyledChart>
@@ -88,6 +82,9 @@ const HourlyForecastChart = ({ weatherHourly, timezoneprop }) => {
                   gridLines: {
                     display: false,
                   },
+                  ticks: {
+                    padding: 10,
+                  },
                 },
               ],
               yAxes: [
@@ -98,7 +95,7 @@ const HourlyForecastChart = ({ weatherHourly, timezoneprop }) => {
             },
             layout: {
               padding: {
-                top: 100,
+                top: 60,
                 left: 30,
                 right: 30,
               },
@@ -150,33 +147,15 @@ const HourlyForecastChart = ({ weatherHourly, timezoneprop }) => {
                     return data.temp;
                   })
                   .map((v, i) => (rainIndexes.includes(i) ? v : null)),
-                // datalabels: {
-                //   labels: {
-                //     title: null,
-                //   },
-                // },
                 borderColor: 'none',
                 fill: false,
-                pointStyle: rain,
-                // pointRadius: 22,
-                // pointHoverRadius: 22,
-              },
-              {
-                data: weatherData
-                  .map((data) => {
-                    return data.temp;
-                  })
-                  .map((v, i) => (snowIndexes.includes(i) ? v : null)),
-                // datalabels: {
-                //   labels: {
-                //     title: null,
-                //   },
-                // },
-                borderColor: 'none',
-                fill: false,
-                pointStyle: snow,
-                // pointRadius: 22,
-                // pointHoverRadius: 22,
+                pointStyle: (context) => {
+                  if (context.dataset.data[context.dataIndex] !== null) {
+                    return context.dataset.data[context.dataIndex] > 0
+                      ? rain
+                      : snow;
+                  }
+                },
               },
             ],
           }}
