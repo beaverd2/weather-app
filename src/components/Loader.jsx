@@ -39,7 +39,6 @@ const Spinner = styled.div`
 const Loader = () => {
   return (
     <Wrapper>
-      {/* <StyledLoader></StyledLoader> */}
       <Spinner></Spinner>
     </Wrapper>
   );

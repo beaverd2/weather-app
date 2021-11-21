@@ -39,16 +39,20 @@ const StyledWeather = styled.div`
   align-items: center;
   padding-left: 1rem;
   padding-right: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: calc(100% - 3rem);
 `;
 const Temperature = styled.p`
   font-size: 8rem;
   font-weight: 300;
   letter-spacing: -0.5rem;
-  padding-left: 1.5rem;
+  padding-left: ${(props) => (props.negative ? '0' : '2.5rem')};
   padding-top: 1rem;
   line-height: 100%;
   @media (max-height: 670px) {
     font-size: 5.5rem;
+    padding-left: ${(props) => (props.negative ? '0' : '1.8rem')};
   }
 `;
 const Description = styled.p`
@@ -60,7 +64,7 @@ const City = styled.p`
   font-size: 3rem;
   font-weight: 400;
   padding-top: 1rem;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
 `;
 const CurrentDate = styled.p`
   font-size: 1.5rem;
@@ -97,7 +101,9 @@ export const Weather = ({
         <CurrentDate>
           {getLocalTime(weather.timezone).split(',')[1].substring(0, 6)}
         </CurrentDate>
-        <Temperature>{Math.round(weather.temp)}&deg;</Temperature>
+        <Temperature negative={Math.round(weather.temp) < 0}>
+          {Math.round(weather.temp)}&deg;
+        </Temperature>
         <Description> {weather.main}</Description>
       </StyledWeather>
       <HourlyForecastChart
