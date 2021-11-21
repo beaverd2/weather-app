@@ -72,7 +72,7 @@ const HourlyForecastChart = ({ weatherHourly, timezoneprop }) => {
     <ChartWrapper>
       <StyledChart>
         <Line
-          height={200}
+          height={150}
           datasetKeyProvider={datasetKeyProvider}
           options={{
             maintainAspectRatio: false,

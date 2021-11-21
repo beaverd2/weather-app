@@ -23,13 +23,13 @@ const StyledWeatherDetailsItem = styled.div`
   padding-bottom: 0.5rem;
   margin-bottom: 1rem;
   border-radius: 5px;
+  text-align: center;
 `;
 const DetailsIcon = styled.i`
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
 `;
 const DetailsDescription = styled.p`
-  text-align: center;
   margin-bottom: 0.5rem;
   color: rgb(255, 255, 255, 0.5);
 `;

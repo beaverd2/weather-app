@@ -9,9 +9,7 @@ import WeeklyForecast from './components/WeeklyForecast';
 import Burger from './components/Burger';
 import { getWeather, setBackground } from './utils/helpers';
 import Loader from './components/Loader';
-
-// TO DO LIST
-// error handling with modal
+import Error from './components/Error';
 
 const AppWrapper = styled.div`
   position: relative;
@@ -42,6 +40,7 @@ const App = () => {
   const [currentDate, setCurrentDate] = useState();
   const [isLoaded, setIsLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleInputLocation = (e) => {
     e.preventDefault();
@@ -57,36 +56,65 @@ const App = () => {
     });
   }, []);
 
-  async function fetchData(newLocation, isReverse) {
+  const fetchData = async (newLocation, isReverse) => {
     const response = await getWeather(newLocation, isReverse);
-    return response;
-  }
-  const getForecast = (e) => {
+    if (response) {
+      return response;
+    } else return false;
+  };
+  const getForecast = async (e) => {
     e.preventDefault();
     setLoading(true);
     document.body.style.overflow = 'hidden';
-    fetchData(inputLocation).then(([newWeather, city]) => {
+    const response = await fetchData(inputLocation);
+    console.log('response', response);
+    if (!('error' in response)) {
+      const newWeather = response[0];
+      const city = response[1];
       setWeather(newWeather);
       setLocation(city);
       setInputLocation(city);
       setLoading(false);
       document.body.style.overflow = 'unset';
-    });
+    } else {
+      document.body.style.overflow = 'hidden';
+      setLoading(false);
+      setError(response.error);
+    }
   };
-  const findMeHandler = () => {
+  const findMeHandler = async () => {
     setLoading(true);
     document.body.style.overflow = 'hidden';
-    fetchData(null, true).then(([newWeather, city]) => {
+    const response = await fetchData(null, true);
+    if (!('error' in response)) {
+      const newWeather = response[0];
+      const city = response[1];
       setWeather(newWeather);
       setLocation(city);
       setLoading(false);
       document.body.style.overflow = 'unset';
-    });
+    } else {
+      document.body.style.overflow = 'hidden';
+      setLoading(false);
+      setError(response.error);
+    }
+  };
+
+  const closeError = () => {
+    setError(false);
+    document.body.style.overflow = 'unset';
   };
 
   return (
     <>
-      {loading ? <Loader /> : null}
+      {loading && <Loader />}
+      {error && (
+        <Error
+          error={error}
+          bgcolor={setBackground(weather.currentWeather.timezone)}
+          closeError={closeError}
+        />
+      )}
       {isLoaded && (
         <AppWrapper bgcolor={setBackground(weather.currentWeather.timezone)}>
           <Weather

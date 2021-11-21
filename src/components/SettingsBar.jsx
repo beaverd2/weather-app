@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { MdLocationSearching } from 'react-icons/md';
 
 const StyledSettingsBar = styled.div`
   position: absolute;
@@ -7,6 +8,8 @@ const StyledSettingsBar = styled.div`
   width: 100%;
   max-width: 480px;
   height: 100vh;
+  padding-left: 1rem;
+  padding-right: 1rem;
   background-color: ${(props) => {
     if (props.bgcolor === 'night') {
       return '#51435f';
@@ -26,32 +29,37 @@ const StyledSettingsBar = styled.div`
   text-align: center;
 `;
 
-const FindMeButton = styled.button`
-  max-width: 280px;
-  padding: 10px 15px;
-  border: 2px solid rgba(0, 0, 0, 0.5);
-  border-radius: 16px;
-`;
-
 const StyledSearchBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2rem 1rem;
+  padding-top: 1.5rem;
   & input {
-    width: 100%;
-    max-width: 280px;
+    margin-right: 1rem;
+    margin-left: 2rem;
+    height: 3rem;
+    width: 85%;
+    max-width: 20rem;
     padding: 10px 15px;
     outline: none;
-    background-color: rgba(255, 255, 255, 0.5);
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: none;
     border-radius: 16px;
     color: #3b3b3b;
     font-size: 20px;
     transition: all 0.3s ease-out;
     &:focus {
-      background-color: rgba(255, 255, 255, 0.7);
-      border-color: rgba(255, 255, 255, 0.8);
+      /* border: 2px solid;
+      border-color: ${(props) => {
+        if (props.bgcolor === 'night') {
+          return 'rgb(52, 43, 61)';
+        }
+        if (props.bgcolor === 'day') {
+          return 'rgb(184, 131, 78)';
+        }
+        if (props.bgcolor === 'evening') {
+          return 'rgb(35, 26, 43)';
+        }
+      }}; */
     }
   }
 `;
@@ -67,7 +75,7 @@ const SettingsBar = ({
 }) => {
   return (
     <StyledSettingsBar open={open} bgcolor={bgcolor}>
-      <StyledSearchBox>
+      <StyledSearchBox bgcolor={bgcolor}>
         <form
           onSubmit={(e) => {
             handleSubmit(e);
@@ -85,15 +93,14 @@ const SettingsBar = ({
             placeholder='Search for a city...'
           />
         </form>
+        <MdLocationSearching
+          fontSize='2rem'
+          onClick={() => {
+            findMeHandler();
+            handleOpen();
+          }}
+        />
       </StyledSearchBox>
-      <FindMeButton
-        onClick={() => {
-          findMeHandler();
-          handleOpen();
-        }}
-      >
-        Find me
-      </FindMeButton>
     </StyledSettingsBar>
   );
 };

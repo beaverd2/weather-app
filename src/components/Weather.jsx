@@ -37,6 +37,8 @@ const StyledWeather = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
 `;
 const Temperature = styled.p`
   font-size: 8rem;
@@ -45,6 +47,9 @@ const Temperature = styled.p`
   padding-left: 1.5rem;
   padding-top: 1rem;
   line-height: 100%;
+  @media (max-height: 670px) {
+    font-size: 5.5rem;
+  }
 `;
 const Description = styled.p`
   font-size: 2rem;
@@ -52,7 +57,6 @@ const Description = styled.p`
 `;
 
 const City = styled.p`
-  max-width: 300px;
   font-size: 3rem;
   font-weight: 400;
   padding-top: 1rem;
