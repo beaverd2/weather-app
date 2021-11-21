@@ -6,7 +6,6 @@ import { Weather } from './components/Weather';
 import WeatherDetails from './components/WeatherDetails';
 import RainChart from './components/RainChart';
 import WeeklyForecast from './components/WeeklyForecast';
-import Burger from './components/Burger';
 import { getWeather, setBackground } from './utils/helpers';
 import Loader from './components/Loader';
 import Error from './components/Error';
@@ -67,7 +66,6 @@ const App = () => {
     setLoading(true);
     document.body.style.overflow = 'hidden';
     const response = await fetchData(inputLocation);
-    console.log('response', response);
     if (!('error' in response)) {
       const newWeather = response[0];
       const city = response[1];

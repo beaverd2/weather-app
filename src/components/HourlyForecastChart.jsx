@@ -66,8 +66,6 @@ const HourlyForecastChart = ({ weatherHourly, timezoneprop }) => {
   const datasetKeyProvider = () => {
     return btoa(Math.random()).substring(0, 12);
   };
-
-  console.log(weatherData);
   return (
     <ChartWrapper>
       <StyledChart>
