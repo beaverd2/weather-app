@@ -7,7 +7,7 @@ const StyledSettingsBar = styled.div`
   z-index: 19;
   width: 100%;
   max-width: 480px;
-  height: 100vh;
+  height: ${(props) => props.currentWindowInnerHeight}px;
   padding-left: 1rem;
   padding-right: 1rem;
   background-color: ${(props) => {
@@ -72,9 +72,14 @@ const SettingsBar = ({
   bgcolor,
   inputLocation,
   findMeHandler,
+  currentWindowInnerHeight,
 }) => {
   return (
-    <StyledSettingsBar open={open} bgcolor={bgcolor}>
+    <StyledSettingsBar
+      currentWindowInnerHeight={currentWindowInnerHeight}
+      open={open}
+      bgcolor={bgcolor}
+    >
       <StyledSearchBox bgcolor={bgcolor}>
         <form
           onSubmit={(e) => {

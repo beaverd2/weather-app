@@ -5,7 +5,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 const ErrorWrapper = styled.div`
   position: absolute;
   width: 100%;
-  height: 100vh;
+  height: ${(props) => props.currentWindowInnerHeight}px;
   background: rgb(0, 0, 0, 0.6);
   z-index: 99;
 `;
@@ -56,9 +56,9 @@ const ErrorText = styled.p`
   text-align: center;
 `;
 
-const Error = ({ error, bgcolor, closeError }) => {
+const Error = ({ error, bgcolor, closeError, currentWindowInnerHeight }) => {
   return (
-    <ErrorWrapper>
+    <ErrorWrapper currentWindowInnerHeight={currentWindowInnerHeight}>
       <ErrorContainer bgcolor={bgcolor}>
         <CloseIcon onClick={closeError}>
           <AiOutlineClose color='white' fontSize='1.5rem' />

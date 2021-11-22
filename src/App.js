@@ -119,12 +119,15 @@ const App = () => {
 
   return (
     <>
-      {loading && <Loader />}
+      {loading && (
+        <Loader currentWindowInnerHeight={currentWindowInnerHeight} />
+      )}
       {error && (
         <Error
           error={error}
           bgcolor={setBackground(weather.currentWeather.timezone)}
           closeError={closeError}
+          currentWindowInnerHeight={currentWindowInnerHeight}
         />
       )}
       {isLoaded && (

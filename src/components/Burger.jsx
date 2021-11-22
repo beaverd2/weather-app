@@ -39,6 +39,7 @@ const Burger = ({
   bgcolor,
   inputLocation,
   findMeHandler,
+  currentWindowInnerHeight,
 }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
@@ -60,6 +61,7 @@ const Burger = ({
         bgcolor={bgcolor}
         inputLocation={inputLocation}
         findMeHandler={findMeHandler}
+        currentWindowInnerHeight={currentWindowInnerHeight}
       />
     </>
   );

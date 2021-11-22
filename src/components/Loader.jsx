@@ -4,7 +4,7 @@ import styled, { keyframes } from 'styled-components';
 const Wrapper = styled.div`
   position: fixed;
   width: 100%;
-  height: 100vh;
+  height: ${(props) => props.currentWindowInnerHeight}px;
   background: rgb(0, 0, 0, 0.6);
   z-index: 99;
 `;
@@ -36,9 +36,9 @@ const Spinner = styled.div`
   border-radius: 50%;
 `;
 
-const Loader = () => {
+const Loader = ({ currentWindowInnerHeight }) => {
   return (
-    <Wrapper>
+    <Wrapper currentWindowInnerHeight={currentWindowInnerHeight}>
       <Spinner></Spinner>
     </Wrapper>
   );

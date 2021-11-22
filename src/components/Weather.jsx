@@ -12,7 +12,6 @@ const StyledWeatherWrapper = styled.div`
   margin-right: auto;
   display: flex;
   flex-direction: column;
-  /* height: 100vh; */
   height: ${(props) => props.currentWindowInnerHeight}px;
   width: 100%;
   background: url(${(props) => {
@@ -100,6 +99,7 @@ export const Weather = ({
         bgcolor={bgcolor}
         inputLocation={inputLocation}
         findMeHandler={findMeHandler}
+        currentWindowInnerHeight={currentWindowInnerHeight}
       />
       <StyledWeather>
         <City>{location}</City>
