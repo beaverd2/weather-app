@@ -40,11 +40,25 @@ const App = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [currentWindowInnerHeight, setCurrentWindowInnerHeight] = useState(
+    window.innerHeight
+  );
 
   const handleInputLocation = (e) => {
     e.preventDefault();
     setInputLocation(e.target.value);
   };
+
+  const handleResize = () => {
+    setCurrentWindowInnerHeight(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     fetchData('Moscow').then(([newWeather, city]) => {
@@ -126,6 +140,7 @@ const App = () => {
             handleSubmit={getForecast}
             inputLocation={inputLocation}
             findMeHandler={findMeHandler}
+            currentWindowInnerHeight={currentWindowInnerHeight}
           />
 
           <WeatherDetails
