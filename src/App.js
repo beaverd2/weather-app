@@ -31,7 +31,7 @@ const AppWrapper = styled.div`
     }
   }};
 `;
-
+let windowInnerWidth = 0;
 const App = () => {
   const [weather, setWeather] = useState({});
   const [inputLocation, setInputLocation] = useState('');
@@ -50,7 +50,11 @@ const App = () => {
   };
 
   const handleResize = () => {
-    setCurrentWindowInnerHeight(window.innerHeight);
+    const currentWindowInnerWidth = window.innerWidth;
+    if (currentWindowInnerWidth !== windowInnerWidth) {
+      windowInnerWidth = currentWindowInnerWidth;
+      setCurrentWindowInnerHeight(window.innerHeight);
+    }
   };
 
   useEffect(() => {
