@@ -30,6 +30,38 @@ const AppWrapper = styled.div`
       return '#31253b';
     }
   }};
+  @media (min-width: 480px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+`;
+
+const AppContainer = styled.div`
+  @media (min-width: 480px) {
+    position: relative;
+    height: 50rem;
+    overflow-y: scroll;
+    box-shadow: 0rem 0rem 1.5rem 1rem rgba(0, 0, 0, 0.2);
+  }
+`;
+const Credits = styled.span`
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  opacity: 0.6;
+  a {
+    text-decoration: none;
+    color: #64b5f6;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  @media (min-width: 480px) {
+    flex: 0 0;
+  }
 `;
 let windowInnerWidth = 0;
 const isMobile =
@@ -144,32 +176,44 @@ const App = () => {
       )}
       {isLoaded && (
         <AppWrapper bgcolor={setBackground(weather.currentWeather.timezone)}>
-          <Weather
-            weather={weather.currentWeather}
-            currentDate={currentDate}
-            weatherHourly={weather.weatherHourly}
-            location={location}
-            bgcolor={setBackground(weather.currentWeather.timezone)}
-            timezoneprop={weather.currentWeather.timezone}
-            handleInput={handleInputLocation}
-            handleSubmit={getForecast}
-            inputLocation={inputLocation}
-            findMeHandler={findMeHandler}
-            currentWindowInnerHeight={currentWindowInnerHeight}
-          />
+          <AppContainer>
+            <Weather
+              weather={weather.currentWeather}
+              currentDate={currentDate}
+              weatherHourly={weather.weatherHourly}
+              location={location}
+              bgcolor={setBackground(weather.currentWeather.timezone)}
+              timezoneprop={weather.currentWeather.timezone}
+              handleInput={handleInputLocation}
+              handleSubmit={getForecast}
+              inputLocation={inputLocation}
+              findMeHandler={findMeHandler}
+              currentWindowInnerHeight={currentWindowInnerHeight}
+            />
 
-          <WeatherDetails
-            weather={weather.weatherDetails}
-            currentDate={currentDate}
-            bgcolor={setBackground(weather.currentWeather.timezone)}
-          />
+            <WeatherDetails
+              weather={weather.weatherDetails}
+              currentDate={currentDate}
+              bgcolor={setBackground(weather.currentWeather.timezone)}
+            />
 
-          <RainChart
-            weatherHourly={weather.weatherHourly}
-            timezone={weather.currentWeather.timezone}
-          />
+            <RainChart
+              weatherHourly={weather.weatherHourly}
+              timezone={weather.currentWeather.timezone}
+            />
 
-          <WeeklyForecast weatherWeekly={weather.weatherWeekly} />
+            <WeeklyForecast weatherWeekly={weather.weatherWeekly} />
+          </AppContainer>
+          <Credits>
+            Author:&nbsp;
+            <a
+              target='_blank'
+              rel='noopener noreferrer'
+              href='https://github.com/beaverd2'
+            >
+              beaverd2
+            </a>
+          </Credits>
         </AppWrapper>
       )}
     </>

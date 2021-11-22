@@ -31,6 +31,9 @@ const StyledWeatherWrapper = styled.div`
   background-repeat: no-repeat;
   justify-content: space-between;
   max-width: 480px;
+  @media (min-width: 480px) {
+    height: 100%;
+  }
 `;
 
 const StyledWeather = styled.div`
