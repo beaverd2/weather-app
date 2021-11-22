@@ -13,9 +13,7 @@ const StyledWeatherWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
-  height: -moz-available;
-  height: -webkit-fill-available;
-  height: fill-available;
+  min-height: -webkit-fill-available;
   width: 100%;
   background: url(${(props) => {
     if (props.bgcolor === 'night') {

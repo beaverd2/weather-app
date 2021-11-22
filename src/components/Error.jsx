@@ -6,9 +6,7 @@ const ErrorWrapper = styled.div`
   position: absolute;
   width: 100%;
   height: 100vh;
-  height: -moz-available;
-  height: -webkit-fill-available;
-  height: fill-available;
+  min-height: -webkit-fill-available;
   background: rgb(0, 0, 0, 0.6);
   z-index: 99;
 `;
