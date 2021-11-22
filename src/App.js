@@ -32,6 +32,10 @@ const AppWrapper = styled.div`
   }};
 `;
 let windowInnerWidth = 0;
+const isMobile =
+  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  );
 const App = () => {
   const [weather, setWeather] = useState({});
   const [inputLocation, setInputLocation] = useState('');
@@ -40,15 +44,13 @@ const App = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [currentWindowInnerHeight, setCurrentWindowInnerHeight] = useState(
-    window.innerHeight
-  );
+  const [currentWindowInnerHeight, setCurrentWindowInnerHeight] =
+    useState('100vh');
 
   const handleInputLocation = (e) => {
     e.preventDefault();
     setInputLocation(e.target.value);
   };
-
   const handleResize = () => {
     const currentWindowInnerWidth = window.innerWidth;
     if (currentWindowInnerWidth !== windowInnerWidth) {
@@ -56,11 +58,17 @@ const App = () => {
       setCurrentWindowInnerHeight(window.innerHeight);
     }
   };
-
+  if (isMobile) {
+    handleResize();
+  }
   useEffect(() => {
-    window.addEventListener('resize', handleResize);
+    if (isMobile) {
+      window.addEventListener('resize', handleResize);
+    }
     return () => {
-      window.removeEventListener('resize', handleResize);
+      if (isMobile) {
+        window.removeEventListener('resize', handleResize);
+      }
     };
   }, []);
 

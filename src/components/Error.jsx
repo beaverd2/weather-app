@@ -5,6 +5,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 const ErrorWrapper = styled.div`
   position: absolute;
   width: 100%;
+  height: 100vh;
   height: ${(props) => props.currentWindowInnerHeight}px;
   background: rgb(0, 0, 0, 0.6);
   z-index: 99;

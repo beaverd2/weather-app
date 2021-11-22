@@ -7,6 +7,7 @@ const StyledSettingsBar = styled.div`
   z-index: 19;
   width: 100%;
   max-width: 480px;
+  height: 100vh;
   height: ${(props) => props.currentWindowInnerHeight}px;
   padding-left: 1rem;
   padding-right: 1rem;
