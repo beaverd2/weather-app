@@ -8,6 +8,9 @@ const StyledSettingsBar = styled.div`
   width: 100%;
   max-width: 480px;
   height: 100vh;
+  height: -moz-available;
+  height: -webkit-fill-available;
+  height: fill-available;
   padding-left: 1rem;
   padding-right: 1rem;
   background-color: ${(props) => {
